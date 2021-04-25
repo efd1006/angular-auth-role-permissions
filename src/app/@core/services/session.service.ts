@@ -1,50 +1,36 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import { LOGIN_PATH } from '../constants/routes';
 
 @Injectable({
-    providedIn: 'root',
-  })
-  export class SessionService {
-    private accessToken: string = '';
-    private refreshToken: string = '';
+  providedIn: 'root',
+})
+export class SessionService {
 
-    constructor(
-      private cookieService: CookieService,
-    ) {
+  constructor(
+    private router: Router,
+  ) { }
 
-    }
-
-    setAccessToken(access_token) {
-      this.accessToken = access_token;
-      this.cookieService.set('access_token', access_token);
-    }
-
-    getAccessToken() {
-      if (this.cookieService.get('access_token')) {
-        return this.cookieService.get('access_token');
-      } else if (this.accessToken) {
-        return this.accessToken;
-      } else {
-        return null;
-      }
-    }
-
-    setRefreshToken(refresh_token) {
-      this.refreshToken = refresh_token;
-      this.cookieService.set('refresh_token', refresh_token);
-    }
-
-    getRefreshToken() {
-      if (this.cookieService.get('refresh_token')) {
-        return this.cookieService.get('refresh_token');
-      } else if (this.refreshToken) {
-        return this.refreshToken;
-      } else {
-        return null;
-      }
-    }
-
-    deleteAll() {
-      this.cookieService.deleteAll();
-    }
+  setAccessToken(authToken) {
+    localStorage.setItem('access_token', String(authToken));
   }
+
+  getAccessToken() {
+    return localStorage.getItem('access_token');
+  }
+
+  setRefreshToken(refreshToken) {
+    localStorage.setItem('refresh_token', String(refreshToken));
+  }
+
+  getRefreshToken() {
+    return localStorage.getItem('refresh_token');
+  }
+
+  clearAll() {
+    localStorage.clear();
+    setTimeout(() => {
+      this.router.navigateByUrl(LOGIN_PATH);
+    }, 500);
+  }
+}

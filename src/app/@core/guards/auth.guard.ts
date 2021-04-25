@@ -4,7 +4,7 @@ import { LOGIN_PATH } from '../constants/routes';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
 

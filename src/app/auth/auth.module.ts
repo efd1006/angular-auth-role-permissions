@@ -18,7 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     NbLayoutModule,
     NbInputModule,
     NbCardModule,
-    NbButtonModule
-  ]
+    NbButtonModule,
+  ],
 })
 export class AuthModule { }

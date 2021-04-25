@@ -7,26 +7,26 @@ import { ToastrService } from '../../../@core/services/toastr.service';
 import { validateAllFormFields, validateEmail } from '../../../@core/validators';
 
 @Component({
-  selector: 'login',
+  selector: 'ngx-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup
+  loginForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private toastrService: ToastrService,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, validateEmail]],
-      password: ['', Validators.required]
-    })
+      password: ['', Validators.required],
+    });
   }
 
   get getForm() {
@@ -34,16 +34,16 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if(!this.loginForm.valid) {
-      validateAllFormFields(this.loginForm)
-      return
+    if (!this.loginForm.valid) {
+      validateAllFormFields(this.loginForm);
+      return;
     }
-    const { email, password } = this.loginForm.value
+    const { email, password } = this.loginForm.value;
     this.authService.login(email, password).subscribe(user => {
-      this.router.navigateByUrl(PAGES_PATH)
+      this.router.navigateByUrl(PAGES_PATH);
     }, err => {
-      this.toastrService.showToast('bottom-right', 'danger', 'alert-circle-outline', err.error.message, "Login Error")
-    })
+      this.toastrService.showToast('bottom-right', 'danger', 'alert-circle-outline', err.error.message, 'Login Error');
+    });
   }
 
 }

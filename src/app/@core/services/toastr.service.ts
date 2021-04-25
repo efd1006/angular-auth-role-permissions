@@ -1,14 +1,14 @@
-import { Injectable } from "@angular/core";
-import { NbToastrService } from "@nebular/theme";
+import { Injectable } from '@angular/core';
+import { NbToastrService } from '@nebular/theme';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ToastrService {
 
   constructor(
-    private nbToastrService: NbToastrService
-  ){}
+    private nbToastrService: NbToastrService,
+  ) {}
 
   // nebular toast
   showToast(position, status, iconName, message: string, submessage: string) {

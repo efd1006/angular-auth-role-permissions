@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
-  user$ = this.authService.getUser()
+  user$ = this.authService.getUser();
 
   themes = [
     {
@@ -46,7 +46,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private themeService: NbThemeService,
     private breakpointService: NbMediaBreakpointsService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) {
 
   }
@@ -73,11 +73,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       switch (event.item.title) {
         case 'Log out':
           this.authService.logout();
-          this.router.navigateByUrl(LOGIN_PATH)
+          this.router.navigateByUrl(LOGIN_PATH);
           break;
 
         case 'Profile':
-          alert('TODO')
+          alert('TODO');
           break;
       }
     });

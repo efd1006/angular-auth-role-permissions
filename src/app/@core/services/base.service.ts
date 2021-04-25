@@ -6,11 +6,11 @@ import { SessionService } from './session.service';
 export class BaseService {
   base_url = environment.baseUrl;
   withToken: boolean = true;
-  
+
   constructor(
-    public http: HttpClient, 
-    public sessionService: SessionService
-  ) {}
+    public http: HttpClient,
+    public sessionService: SessionService,
+  ) { }
 
   public getHeaders() {
     let headers = new HttpHeaders().append('Content-Type', 'application/json');

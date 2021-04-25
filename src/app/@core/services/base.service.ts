@@ -6,39 +6,63 @@ import { SessionService } from './session.service';
 export class BaseService {
   base_url = environment.baseUrl;
   withToken: boolean = true;
+  withCustomHeader: boolean = false;
+  customHeaders: any = null;
 
   constructor(
     public http: HttpClient,
     public sessionService: SessionService,
   ) { }
 
-  public getHeaders() {
-    let headers = new HttpHeaders().append('Content-Type', 'application/json');
-    if (this.sessionService.getAccessToken() && this.withToken) {
-      headers = new HttpHeaders().append('Content-Type', 'application/json')
-        .append('Authorization', 'Bearer ' + this.sessionService.getAccessToken());
+  private getHeaders() {
+    const headers = new HttpHeaders().append(
+      'Content-Type',
+      'application/json',
+    );
+    const token = this.sessionService.getAccessToken();
+    if (token && this.withToken && !this.withCustomHeader) {
+      const headers = new HttpHeaders()
+        .append('Content-Type', 'application/json')
+        .append('Authorization', 'Bearer ' + token);
       return headers;
     }
+    if (this.withCustomHeader) return this.customHeaders;
     return headers;
   }
 
-  public $get(url: string, withToken: boolean = true) {
+  public $get(url: string, withToken: boolean = true, withCustomHeader: boolean = false, customHeaders: HttpHeaders = null) {
     this.withToken = withToken;
+    this.withCustomHeader = withCustomHeader;
+    if (this.withCustomHeader && customHeaders) {
+      this.customHeaders = customHeaders;
+    }
     return this.http.get(this.base_url + url, { headers: this.getHeaders() });
   }
 
-  public $post(url: string, data: any, withToken: boolean = true) {
+  public $post(url: string, data: any, withToken: boolean = true, withCustomHeader: boolean = false, customHeaders: HttpHeaders = null) {
     this.withToken = withToken;
+    this.withCustomHeader = withCustomHeader;
+    if (this.withCustomHeader && customHeaders) {
+      this.customHeaders = customHeaders;
+    }
     return this.http.post(this.base_url + url, JSON.stringify(data), { headers: this.getHeaders() });
   }
 
-  public $put(url: string, data: any, withToken: boolean = true) {
+  public $put(url: string, data: any, withToken: boolean = true, withCustomHeader: boolean = false, customHeaders: HttpHeaders = null) {
     this.withToken = withToken;
+    this.withCustomHeader = withCustomHeader;
+    if (this.withCustomHeader && customHeaders) {
+      this.customHeaders = customHeaders;
+    }
     return this.http.put(this.base_url + url, JSON.stringify(data), { headers: this.getHeaders() });
   }
 
-  public $delete(url: string, withToken: boolean = true) {
+  public $delete(url: string, withToken: boolean = true, withCustomHeader: boolean = false, customHeaders: HttpHeaders = null) {
     this.withToken = withToken;
+    this.withCustomHeader = withCustomHeader;
+    if (this.withCustomHeader && customHeaders) {
+      this.customHeaders = customHeaders;
+    }
     return this.http.delete(this.base_url + url, { headers: this.getHeaders() });
   }
 

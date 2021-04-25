@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { User } from '../../../@core/models';
 import { AuthService } from '../../../@core/services/auth.service';
 import { Router } from '@angular/router';
 import { LOGIN_PATH } from '../../../@core/constants/routes';

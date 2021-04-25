@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -50,6 +50,15 @@ export class AuthService extends BaseService {
     return this.$get(`/auth/me`).pipe(map(user => user as User));
   }
 
+  refreshToken() {
+    const refresh_token = this.sessionService.getRefreshToken()
+    const headers = new HttpHeaders().append(
+      'Authorization',
+      'Bearer ' + refresh_token,
+    );
+    return this.$post(`/auth/refresh`, {}, true, true, headers);
+  }
+
   setUser(user: User) {
     this.user.next(user);
   }
@@ -69,7 +78,7 @@ export class AuthService extends BaseService {
 
   logout() {
     this.loggedIn = false;
-    this.sessionService.deleteAll();
+    this.sessionService.clearAll();
   }
 
 }

@@ -1,22 +1,22 @@
-import { Observable, of } from "rxjs"
-import { Injectable } from '@angular/core'
+import { Observable, of } from 'rxjs';
+import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GlobalLoadingService {
 
-  private status: boolean = false
+  private status: boolean = false;
 
   show() {
-    this.status = true
+    this.status = true;
   }
 
   hide() {
-    this.status = false
+    this.status = false;
   }
 
   subscribeStatus(): Observable<boolean> {
-    return of(this.status)
+    return of(this.status);
   }
 }

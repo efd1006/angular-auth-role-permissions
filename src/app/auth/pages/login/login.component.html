@@ -1,0 +1,23 @@
+<nb-layout></nb-layout>
+
+<nb-card class="login-form">
+  <nb-card-header>Login</nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="loginForm">
+      <input type="email" formControlName="email" id="email" fullWidth nbInput placeholder="Enter you email" />
+      <div *ngIf="getForm.email.errors">
+        <div class="form-error" *ngIf="getForm.email.touched && getForm.email.errors.required">Email is required.</div>
+        <div class="form-error" *ngIf="getForm.email.touched && getForm.email.errors.invalidEmail">Invalid email.</div>
+      </div>
+      <input type="password" formControlName="password" id="password" fullWidth nbInput placeholder="Enter you password" />
+      <div *ngIf="getForm.password.errors">
+        <div class="form-error" *ngIf="getForm.password.touched && getForm.password.errors.required">Password is required.</div>
+      </div>
+    </form>
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton fullWidth (click)="login()" status="primary">
+      login
+    </button>
+  </nb-card-footer>
+</nb-card>

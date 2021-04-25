@@ -20,7 +20,6 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
-import { CookieService } from 'ngx-cookie-service';
 import { TokenInterceptor } from './@core/interceptors/token.interceptor';
 import { RefreshTokenInterceptor } from './@core/interceptors/refresh-token.interceptor';
 
@@ -44,7 +43,6 @@ import { RefreshTokenInterceptor } from './@core/interceptors/refresh-token.inte
     ThemeModule.forRoot(),
   ],
   providers: [
-    CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RefreshTokenInterceptor,

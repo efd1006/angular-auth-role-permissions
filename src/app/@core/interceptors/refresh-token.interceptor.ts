@@ -8,10 +8,9 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, switchMap, filter, take, finalize } from 'rxjs/operators';
-import { AuthService } from '../services/auth.service'
-import { SessionService } from '../services/session.service'
-import { ToastrService } from '../services/toastr.service'
-import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { SessionService } from '../services/session.service';
+import { ToastrService } from '../services/toastr.service';
 
 @Injectable()
 export class RefreshTokenInterceptor implements HttpInterceptor {
@@ -20,7 +19,6 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
     null,
   );
   constructor(
-    // private authService: AuthService,
     private sessionService: SessionService,
     private toastrService: ToastrService,
     private injector: Injector,
@@ -47,24 +45,24 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
-    const authService = this.injector.get(AuthService)
+    const authService = this.injector.get(AuthService);
     if (!this.isRefreshing) {
       this.isRefreshing = true;
       this.refreshTokenSubject.next(null);
       return authService.refreshToken().pipe(
         switchMap((token: any) => {
-          this.sessionService.setAccessToken(token['access_token'])
-          this.sessionService.setRefreshToken(token['refresh_token'])
+          this.sessionService.setAccessToken(token['access_token']);
+          this.sessionService.setRefreshToken(token['refresh_token']);
           return next.handle(this.addToken(request));
         }),
         catchError((error) => {
           // If there is an exception calling 'refreshToken', bad news so logout.
           if (error.status === 400 && error.url.includes('/refresh')) {
-            if(this.sessionService.getRefreshToken()) {
-              this.toastrService.showToast('bottom-right', 'danger', 'alert-circle-outline', "Session timeout.", 'Please re-login');
+            if (this.sessionService.getRefreshToken()) {
+              this.toastrService.showToast('bottom-right', 'danger', 'alert-circle-outline', 'Session timeout.', 'Please re-login');
               setTimeout(() => {
                 this.sessionService.clearAll();
-              }, 1000);
+              }, 1000 );
             }
           }
           return throwError(error);
@@ -77,7 +75,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
       return this.refreshTokenSubject.pipe(
         filter((token) => token != null),
         take(1),
-        switchMap((jwt) => {
+        switchMap(() => {
           return next.handle(this.addToken(request));
         }),
       );
@@ -85,7 +83,7 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
   }
 
   private addToken(request: HttpRequest<any>) {
-    const token = this.sessionService.getAccessToken()
+    const token = this.sessionService.getAccessToken();
     return request.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`,

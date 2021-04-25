@@ -15,13 +15,13 @@ export class BaseService {
   ) { }
 
   private getHeaders() {
-    const headers = new HttpHeaders().append(
+    let headers = new HttpHeaders().append(
       'Content-Type',
       'application/json',
     );
     const token = this.sessionService.getAccessToken();
     if (token && this.withToken && !this.withCustomHeader) {
-      const headers = new HttpHeaders()
+      headers = new HttpHeaders()
         .append('Content-Type', 'application/json')
         .append('Authorization', 'Bearer ' + token);
       return headers;

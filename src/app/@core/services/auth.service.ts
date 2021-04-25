@@ -51,7 +51,7 @@ export class AuthService extends BaseService {
   }
 
   refreshToken() {
-    const refresh_token = this.sessionService.getRefreshToken()
+    const refresh_token = this.sessionService.getRefreshToken();
     const headers = new HttpHeaders().append(
       'Authorization',
       'Bearer ' + refresh_token,

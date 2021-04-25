@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeService } from '@nebular/theme';
-
-import { UserData } from '../../../@core/data/users';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { User } from '../../../@core/models';
+import { AuthService } from '../../../@core/services/auth.service';
+import { Router } from '@angular/router';
+import { LOGIN_PATH } from '../../../@core/constants/routes';
 
 @Component({
   selector: 'ngx-header',
@@ -14,7 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
-  user: any;
+  user$ = this.authService.getUser()
 
   themes = [
     {
@@ -37,23 +39,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'default';
 
-  userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
+  userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
 
   constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService,
-              private themeService: NbThemeService,
-              private userService: UserData,
-              private breakpointService: NbMediaBreakpointsService) {
+    private menuService: NbMenuService,
+    private themeService: NbThemeService,
+    private breakpointService: NbMediaBreakpointsService,
+    private authService: AuthService,
+    private router: Router
+  ) {
+
   }
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
-
-    this.userService.getUsers()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.john);
-
     const { xl } = this.breakpointService.getBreakpointsMap();
+
     this.themeService.onMediaQueryChange()
       .pipe(
         map(([, currentBreakpoint]) => currentBreakpoint.width < xl),
@@ -67,6 +68,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(themeName => this.currentTheme = themeName);
+
+    this.menuService.onItemClick().subscribe((event) => {
+      switch (event.item.title) {
+        case 'Log out':
+          this.authService.logout();
+          this.router.navigateByUrl(LOGIN_PATH)
+          break;
+
+        case 'Profile':
+          alert('TODO')
+          break;
+      }
+    });
   }
 
   ngOnDestroy() {

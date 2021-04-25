@@ -17,7 +17,7 @@ export class BaseService {
     if (this.sessionService.getAccessToken() && this.withToken) {
 
       const headers = new HttpHeaders().append('Content-Type', 'application/json')
-        .append('Authorization', 'token ' + this.sessionService.getAccessToken());
+        .append('Authorization', 'Bearer ' + this.sessionService.getAccessToken());
       return headers;
     }
 

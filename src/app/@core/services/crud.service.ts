@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http'
 import { SessionService } from './session.service'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { CrudServiceInterface } from '../interfaces/crud-service.interface'
-import { FilterModel } from '../models/filter.model'
+import { CrudServiceInterface } from '../interfaces'
+import { FilterModel } from '../models'
 
 export class CrudService<T> extends BaseService implements CrudServiceInterface<T>{
 

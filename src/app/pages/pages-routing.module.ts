@@ -10,7 +10,15 @@ const routes: Routes = [{
   children: [
     {
       path: 'dashboard',
-      component: DashboardComponent,
+      loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+    },
+    {
+      path: 'roles',
+      loadChildren: () => import('./roles/roles.module').then(m => m.RolesModule),
+    },
+    {
+      path: 'permissions',
+      loadChildren: () => import('./permissions/permissions.module').then(m => m.PermissionsModule),
     },
     {
       path: '',

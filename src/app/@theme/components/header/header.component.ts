@@ -4,7 +4,6 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { AuthService } from '../../../@core/services/auth.service';
 import { Router } from '@angular/router';
-import { LOGIN_PATH } from '../../../@core/constants/routes';
 
 @Component({
   selector: 'ngx-header',
@@ -72,7 +71,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       switch (event.item.title) {
         case 'Log out':
           this.authService.logout();
-          this.router.navigateByUrl(LOGIN_PATH);
+          this.router.navigateByUrl('/auth/login');
           break;
 
         case 'Profile':

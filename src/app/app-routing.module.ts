@@ -1,6 +1,7 @@
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AuthGuard } from './@core/guards/auth.guard';
+import { PagesComponent } from './pages/pages.component';
 
 export const routes: Routes = [
   {

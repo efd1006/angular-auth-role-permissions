@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PAGES_PATH } from '../../../@core/constants/routes';
 import { AuthService } from '../../../@core/services/auth.service';
 import { ToastrService } from '../../../@core/services/toastr.service';
 import { validateAllFormFields, validateEmail } from '../../../@core/validators';
@@ -40,7 +39,7 @@ export class LoginComponent implements OnInit {
     }
     const { email, password } = this.loginForm.value;
     this.authService.login(email, password).subscribe(user => {
-      this.router.navigateByUrl(PAGES_PATH);
+      this.router.navigateByUrl('/dashboard');
     }, err => {
       this.toastrService.showToast('bottom-right', 'danger', 'alert-circle-outline', err.error.message, 'Login Error');
     });

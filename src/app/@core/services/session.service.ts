@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { LOGIN_PATH } from '../constants/routes';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +29,7 @@ export class SessionService {
   clearAll() {
     localStorage.clear();
     setTimeout(() => {
-      this.router.navigateByUrl(LOGIN_PATH);
+      this.router.navigateByUrl('/auth/login');
     }, 500);
   }
 }

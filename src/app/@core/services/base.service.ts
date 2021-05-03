@@ -1,5 +1,6 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { ServerDataSource } from 'ng2-smart-table';
 import { environment } from '../../../environments/environment';
 import { SessionService } from './session.service';
 
@@ -78,6 +79,17 @@ export class BaseService {
     return this.http.put(this.base_url + url, formData, { headers: headers }).pipe(
       map(() => true),
     );
+  }
+
+  public smartTableDataSource(url: string) {
+    const sourceConf = {
+      endPoint: this.base_url + url,
+      totalKey: 'total',
+      dataKey: 'data',
+      pagerPageKey: 'page',
+      pagerLimitKey: 'limit',
+    };
+    return new ServerDataSource(this.http, sourceConf);
   }
 
 }

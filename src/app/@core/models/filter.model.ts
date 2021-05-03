@@ -1,6 +1,6 @@
 export class FilterModel {
-  relationship: string[];
-  filters: Field[];
+  relationship?: string[];
+  filters?: Field[];
 
 }
 

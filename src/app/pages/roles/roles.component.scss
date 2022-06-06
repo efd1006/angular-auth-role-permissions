@@ -1,0 +1,16 @@
+// center smart table content
+:host /deep/ ng2-smart-table thead th {
+  text-align: center;
+}
+
+:host /deep/ ng2-smart-table thead th .ng2-smart-title {
+  font-weight: 900;
+}
+
+:host /deep/ ng2-smart-table thead th ng2-st-column-title div ng2-smart-table-title a {
+  font-weight: 900;
+}
+
+:host /deep/ ng2-smart-table tbody > tr > td {
+  text-align: center;
+}
